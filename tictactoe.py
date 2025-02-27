@@ -1,17 +1,36 @@
 print('\33c')
 import turtle
-
+import sys
+turtleobject = turtle.Turtle()
+turtle.tracer(0,0)
+def draw_square(side):
+    for it in range(4):
+        turtleobject.forward(side)
+        turtleobject.right(90)
 def draw_grid(grid):
-        # draw 9 squares
-        # for each row in grid
-            #for each column in each row
-                #draw either a cross or circle
+    turtleobject.pensize(2)
+    for row in range(3): #row => 0, 1, 2
+        for col in range(3): #col => 0, 1, 2
+            value = grid[row][col]
+            x = col*100-200
+            y = -row*100+200
+            turtleobject.penup()
+            turtleobject.goto(x, y)
+            turtleobject.pendown()
+            draw_square(100)
+            if value == 'nought':
+                turtleobject.penup()
+                turtleobject.goto(x+50, y-100)
+                turtleobject.pendown()
+                turtleobject.circle(50)
+    turtle.update()
     return
-        #0 #1 #2
+
 grid = [[0,0,0], #0
         [0,0,0], #1
         [0,0,0]] #2
-print(grid)
+draw_grid(grid)
+
 turns = ['cross','nought']
 
 gameover = False
@@ -25,5 +44,5 @@ while not gameover and turncount < 9:
     if row < 0 or column < 0:
         break
     grid[row][column] = turn
-    print(grid)
+    draw_grid(grid)
     turncount = turncount + 1
