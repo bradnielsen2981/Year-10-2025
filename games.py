@@ -1,13 +1,12 @@
 import databaseinterface
 import logging
 
-import logging
-
 # Configure logging
 logfile = "database.log"
 logging.basicConfig(filename='log.py') # Log format
 logger = logging.getLogger("DatabaseLogger")
 
+# Create the Database
 Database = databaseinterface.Database("games.db")
 
 def insert_new_player(firstname, lastname, teamid, phonenumber, password, email):
