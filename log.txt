@@ -1,0 +1,2 @@
+ERROR:databaseinterface:DATABASE ERROR: no such table: users
+ERROR:databaseinterface:SELECT * FROM users

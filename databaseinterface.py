@@ -3,7 +3,7 @@
 # It's therefore easier to simply inherit the code..
 # Created by Brad Nielsen 2019
 #-----------------------------------------------------------------------#
-import sqlite3
+import sqlite3 
 import logging
 import sys
 
