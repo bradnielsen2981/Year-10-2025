@@ -15,8 +15,9 @@ def insert_new_player():
     firstname = input("Enter the player's first name: ")
     lastname = input("Enter the player's last name: ")
     teamid = int(input("Enter the player's team ID: "))
-    query = "INSERT INTO players (firstname, lastname, teamid) VALUES (?, ?, ?)"
-    Database.ModifyQuery(query, (firstname, lastname, teamid))
+    email = input("Enter the player's email: ")
+    query = "INSERT INTO players (firstname, lastname, teamid, email, password) VALUES (?, ?, ?, ?, ?)"
+    Database.ModifyQuery(query, (firstname, lastname, teamid, email, "password"))
     return
 
 def get_players():
@@ -47,5 +48,6 @@ def get_games():
     return
 
 insert_new_player()
+get_players()
 
 
