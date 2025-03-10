@@ -1,35 +1,51 @@
 import databaseinterface
 import logging
 
+print("\033c")
+
 # Configure logging
 logfile = "database.log"
-logging.basicConfig(filename='log.py') # Log format
+logging.basicConfig(filename='log.txt') # Log format
 logger = logging.getLogger("DatabaseLogger")
 
 # Create the Database
 Database = databaseinterface.Database("games.db")
 
-def insert_new_player(firstname, lastname, teamid, phonenumber, password, email):
-    query = "INSERT INTO players (firstname, lastname, teamid, phonenumber, password, email) VALUES (?, ?, ?, ?, ?, ?)"
-    Database.ModifyQuery(query, (firstname, lastname, teamid, phonenumber, password, email))
-    return 
+def insert_new_player():
+    firstname = input("Enter the player's first name: ")
+    lastname = input("Enter the player's last name: ")
+    teamid = int(input("Enter the player's team ID: "))
+    query = "INSERT INTO players (firstname, lastname, teamid) VALUES (?, ?, ?)"
+    Database.ModifyQuery(query, (firstname, lastname, teamid))
+    return
 
-def get_all_players():
+def get_players():
     query = "SELECT * FROM players"
-    results = Database.ViewQuery(query)
-    return results
+    results = Database.ViewQuery(query) #LIST of DICTIONARIES
+    for person in results:
+        print(person['firstname'], person['lastname'], person['teamid'])
+    return
 
-def get_all_players_by_team(teamid):
-    query = "SELECT * FROM players WHERE teamid = ?"
-    results = Database.ViewQuery(query, (teamid,))
-    return results
+# make this query useful
+def get_games():
+    gamequery = "SELECT team1, team2, gamelocation FROM games"
+    gameresults = Database.ViewQuery(gamequery)
 
-print(get_all_players())
+    for game in gameresults:
 
-list_of_dictionaries = get_all_players_by_team(1)
-print(list_of_dictionaries)
+        #get team 1 
+        teamquery = "SELECT teamname FROM teams WHERE teamid = ?"
+        teamresults = Database.ViewQuery(teamquery, (game['team1'],))
+        print(teamresults[0])
 
-for dict in list_of_dictionaries:
-    print(dict["firstname"])
-    print(dict["lastname"])
-    print(dict["teamid"])
+        #get team 2 
+        teamquery = "SELECT teamname FROM teams WHERE teamid = ?"
+        teamresults = Database.ViewQuery(teamquery, (game['team2'],))
+        print(teamresults[0])        
+
+        print(game['gamelocation'])
+    return
+
+insert_new_player()
+
+
