@@ -14,7 +14,14 @@ Database = databaseinterface.Database("games.db")
 def insert_new_player():
     firstname = input("Enter the player's first name: ")
     lastname = input("Enter the player's last name: ")
-    teamid = int(input("Enter the player's team ID: "))
+
+    #Red Warriors
+    teamname = input("Enter the player's team name: ")
+    query = "SELECT teamid FROM teams WHERE teamname = ?"
+    results = Database.ViewQuery(query, (teamname,))
+    team = results[0] #get the first item from the teams list
+    teamid = team['teamid'] #get the team column from the team dictionary
+
     email = input("Enter the player's email: ")
     query = "INSERT INTO players (firstname, lastname, teamid, email, password) VALUES (?, ?, ?, ?, ?)"
     Database.ModifyQuery(query, (firstname, lastname, teamid, email, "password"))
